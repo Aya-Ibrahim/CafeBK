@@ -27,8 +27,15 @@ public class TablesDao {
     }
 
     public List<CafeTable> getAllTables(Session session) {
-        List<CafeTable> tables = new ArrayList<CafeTable>();
+        List<CafeTable> tables = new ArrayList<>();
         Query createQuery = session.createQuery("from CafeTable");
+        tables = createQuery.list();
+        return tables;
+    }
+
+    public List<CafeTable> getTablesWithCriteria(Session session, boolean empty) {
+        List<CafeTable> tables = new ArrayList<>();
+        Query createQuery = session.createQuery("from CafeTable c where c.empty = " + empty);
         tables = createQuery.list();
         return tables;
     }

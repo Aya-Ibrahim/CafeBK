@@ -33,4 +33,8 @@ public class TablesMangment {
     public List<CafeTable> getAllTables(Session session) {
         return tableDao.getAllTables(session);
     }
+
+    public List<CafeTable> getTablesWithCriteria(Session session, boolean opened) {
+        return tableDao.getTablesWithCriteria(session, opened);
+    }
 }
