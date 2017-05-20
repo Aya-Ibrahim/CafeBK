@@ -33,9 +33,7 @@ public class Game implements java.io.Serializable {
     private String baseUnit;
     private BigDecimal basePrice;
     private Boolean isActive;
-    private Long periode;
-    private Date startTime;
-    private Date endTime;
+ 
     private Set<GameLine> gameLines = new HashSet<GameLine>(0);
 
     public Game() {
@@ -54,9 +52,9 @@ public class Game implements java.io.Serializable {
         this.baseUnit = baseUnit;
         this.basePrice = basePrice;
         this.isActive = isActive;
-        this.periode = periode;
-        this.startTime = startTime;
-        this.endTime = endTime;
+//        this.periode = periode;
+//        this.startTime = startTime;
+//        this.endTime = endTime;
         this.gameLines = gameLines;
     }
 
@@ -118,34 +116,6 @@ public class Game implements java.io.Serializable {
         this.isActive = isActive;
     }
 
-    @Column(name = "periode", precision = 10, scale = 0)
-    public Long getPeriode() {
-        return this.periode;
-    }
-
-    public void setPeriode(Long periode) {
-        this.periode = periode;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "startTime", length = 19)
-    public Date getStartTime() {
-        return this.startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "endTime", length = 19)
-    public Date getEndTime() {
-        return this.endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "game")
     public Set<GameLine> getGameLines() {
