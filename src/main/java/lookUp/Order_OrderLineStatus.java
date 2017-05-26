@@ -9,7 +9,7 @@ package lookUp;
  *
  * @author < abdelrhman el_hadidy >
  */
-public enum Status {
+public enum Order_OrderLineStatus {
    OPEN,PREPARED,FINISHED,SERVED,CLOSED
     
 }

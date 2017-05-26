@@ -10,7 +10,7 @@ import beans.Order;
 import beans.Service;
 import java.util.ArrayList;
 import java.util.List;
-import lookUp.Status;
+import lookUp.Order_OrderLineStatus;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -32,7 +32,7 @@ public class OrderDao {
     public List<Order> getAllFinishedOrder(Session session) {
         List<Order> items = new ArrayList<Order>();
         Query Query = session.createQuery("from Order where status =:MyStatus");
-        Query.setParameter("MyStatus", Status.FINISHED.toString());
+        Query.setParameter("MyStatus", Order_OrderLineStatus.FINISHED.toString());
         items = Query.list();
         return items;
     }
