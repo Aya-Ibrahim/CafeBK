@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(service.GameFacadeREST.class);
         resources.add(service.ItemFacadeREST.class);
+        resources.add(service.OrderFacadeREST1.class);
         resources.add(service.TableFacadeREST.class);
     }
 

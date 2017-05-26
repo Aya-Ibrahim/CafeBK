@@ -25,6 +25,7 @@ public class DaoFactory {
     public static final int INGREDIENTDAO = 5;
     public static final int ITEMDAO = 6;
     public static final int GAMEDAO = 7;
+    public static final int ORDERDAO = 8;
 
     public Object getDAO(int daoName) {
         switch (daoName) {
@@ -41,6 +42,8 @@ public class DaoFactory {
                 return ItemDao.getInstance();
             case 7:
                 return GameDao.getInstance();
+            case 8:
+                return OrderDao.getInstance();
             default:
                 return null;
         }

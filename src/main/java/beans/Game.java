@@ -46,7 +46,7 @@ public class Game implements java.io.Serializable {
         this.basePrice = basePrice;
     }
 
-    public Game(Tab tab, String gameName, String baseUnit, BigDecimal basePrice, Boolean isActive, Long periode, Date startTime, Date endTime, Set<GameLine> gameLines) {
+    public Game(Tab tab, String gameName, String baseUnit, BigDecimal basePrice, Boolean isActive, Set<GameLine> gameLines) {
         this.tab = tab;
         this.gameName = gameName;
         this.baseUnit = baseUnit;

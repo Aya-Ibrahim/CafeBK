@@ -32,6 +32,7 @@ public class Order  implements java.io.Serializable {
      private CafeTable cafeTable;
      private User user;
      private String voucherNumber;
+     private String status;
      private Date orderDate;
      private boolean isClosed;
      private Date closedDate;
@@ -86,7 +87,7 @@ public class Order  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="cashier_id", nullable=false)
+    @JoinColumn(name="cashier_id")
     public User getUser() {
         return this.user;
     }
@@ -104,6 +105,15 @@ public class Order  implements java.io.Serializable {
     public void setVoucherNumber(String voucherNumber) {
         this.voucherNumber = voucherNumber;
     }
+  @Column(name="status",  length=25)
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="order_Date", nullable=false, length=19)
@@ -126,7 +136,7 @@ public class Order  implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="closedDate", nullable=false, length=19)
+    @Column(name="closedDate",  length=19)
     public Date getClosedDate() {
         return this.closedDate;
     }
