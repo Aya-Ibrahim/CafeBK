@@ -26,3 +26,15 @@
 hs_err_pid*
 
 # End of https://www.gitignore.io/api/java
+
+*.xml
+
+*.war
+
+*.class
+
+*.jar
+
+*.dpf
+
+*.properties
