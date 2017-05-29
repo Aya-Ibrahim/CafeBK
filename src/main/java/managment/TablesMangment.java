@@ -6,6 +6,7 @@
 package managment;
 
 import beans.CafeTable;
+import beans.Order;
 import dao.DaoFactory;
 import static dao.DaoFactory.TABLESDAO;
 import dao.TablesDao;
@@ -36,5 +37,9 @@ public class TablesMangment {
 
     public List<CafeTable> getTablesWithCriteria(Session session, boolean opened) {
         return tableDao.getTablesWithCriteria(session, opened);
+    }
+
+    public Order getLatestOrder(Session session,int tableId) {
+        return tableDao.getLatestOrder(session,tableId);
     }
 }

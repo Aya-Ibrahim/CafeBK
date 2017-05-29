@@ -7,15 +7,12 @@ package service;
 
 import SessionHandling.SessionHandler;
 import beans.Game;
-import beans.Item;
-import beans.Service;
 import filters.PropertyFilterMixIn;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import managment.ItemManagment;
 import managment.GameMangment;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;

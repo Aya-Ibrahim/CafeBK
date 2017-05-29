@@ -6,6 +6,7 @@
 package dao;
 
 import beans.CafeTable;
+import beans.Order;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
@@ -38,6 +39,15 @@ public class TablesDao {
         Query createQuery = session.createQuery("from CafeTable c where c.empty = " + empty);
         tables = createQuery.list();
         return tables;
+    }
+
+    public Order getLatestOrder(Session session,int tableId) {
+        List<Order> orders = new ArrayList<>();
+        Query createQuery = session.createQuery(
+                "from Order o where o.cafeTable.tableId="+tableId+" order by o.orderDate desc ");
+        orders = createQuery.list();
+
+        return (orders != null) ? orders.get(0) : null;
     }
 
 }

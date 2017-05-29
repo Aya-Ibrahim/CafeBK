@@ -27,7 +27,7 @@ public class TabDao {
     }
 
     public List<Tab> getAllTables(Session session) {
-        List<Tab> tab = new ArrayList<Tab>();
+        List<Tab> tab = new ArrayList<>();
         Query createQuery = session.createQuery("from Tab");
         tab = createQuery.list();
         return tab;
