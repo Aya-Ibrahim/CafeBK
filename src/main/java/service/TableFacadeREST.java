@@ -7,18 +7,15 @@ package service;
 
 import SessionHandling.SessionHandler;
 import beans.CafeTable;
-import beans.Item;
 import beans.Order;
-import beans.Service;
+
+
 import filters.PropertyFilterMixIn;
 import java.util.List;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import managment.ItemManagment;
 import managment.TablesMangment;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
@@ -121,7 +118,7 @@ public class TableFacadeREST {
         }
         return jsonString;
     }
-    
+
     @POST
     @Path("getLatestOrder")
     @Consumes("application/json")
@@ -134,20 +131,22 @@ public class TableFacadeREST {
         try {
             TablesMangment tablesMangment = TablesMangment.getInstance();
 
-            Order order = tablesMangment.getLatestOrder(session,table.getTableId());
+            Order order = tablesMangment.getLatestOrder(session, table.getTableId());
             //  ObjectMappingToJson mappingClass = new ObjectMappingToJson();
-            String[] FieldToBeMapped = {"orderId", "voucherNumber","orderlines"};
-            order.getOrderlines().forEach(orderLine->{orderLine.setOrder(null);});
+            String[] FieldToBeMapped = {"orderId", "voucherNumber", "orderlines"};
+            // order.getOrderlines().forEach(orderLine->{orderLine.setOrder(null);});
             if (order != null) {
                 //        jsonString = mappingClass.getJsonObjectFromObject(tables, FieldToBeMapped);
                 // ____________________________________________________________________________ //
 
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.getSerializationConfig().addMixInAnnotations(Object.class, PropertyFilterMixIn.class);
-                FilterProvider filters = new SimpleFilterProvider().addFilter("filter fileds by name", SimpleBeanPropertyFilter.filterOutAllExcept(FieldToBeMapped));
-                ObjectWriter writer = mapper.writer(filters);
+                 mapper.getSerializationConfig().addMixInAnnotations(Object.class, PropertyFilterMixIn.class);
+                 FilterProvider filters = new SimpleFilterProvider().addFilter("filter fileds by name", SimpleBeanPropertyFilter.filterOutAllExcept(FieldToBeMapped));
+                 ObjectWriter writer = mapper.writer(filters);
                 jsonString = writer.writeValueAsString(order);
-
+               // mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+               // mapper.enable(SerializationFeature.INDENT_OUTPUT);
+               // mapper.writeValue(System.out, order);
                 // ____________________________________________________________________________ //
             } else {
                 jsonString = "{\"result\":\" user was Not Saved \"}";
