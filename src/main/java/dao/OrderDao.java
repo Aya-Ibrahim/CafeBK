@@ -18,7 +18,7 @@ import org.hibernate.Session;
  *
  * @author < abdelrhman el_hadidy >
  */
-public class OrderDao {
+public class OrderDao extends BaseDAO{
 
     static OrderDao orderDao = new OrderDao();
 
@@ -35,6 +35,14 @@ public class OrderDao {
         Query.setParameter("MyStatus", Order_OrderLineStatus.FINISHED.toString());
         items = Query.list();
         return items;
+    }
+
+    public Order getOrderById(Integer orderId, Session session) {
+        Order order = null;
+        Query Query = session.createQuery("from Order order where order.orderId =:MyId");
+        Query.setParameter("MyId", orderId);
+        order = (Order) Query.uniqueResult();
+        return order;
     }
 
 }

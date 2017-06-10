@@ -10,6 +10,6 @@ package lookUp;
  * @author < abdelrhman el_hadidy >
  */
 public enum Order_OrderLineStatus {
-   OPEN,PREPARED,FINISHED,SERVED,CLOSED
+   NEW,PREPARED,FINISHED,SERVED,CLOSED
     
 }

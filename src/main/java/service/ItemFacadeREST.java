@@ -7,9 +7,11 @@ package service;
 
 import SessionHandling.SessionHandler;
 import beans.Item;
+import beans.ItemHasAddition;
 import beans.Service;
 import filters.PropertyFilterMixIn;
 import java.util.List;
+import java.util.Set;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -45,8 +47,16 @@ public class ItemFacadeREST {
             ItemManagment itemManagment = ItemManagment.getInstance();
 
             List<Item> items = itemManagment.getAllItemsByServiceId(service, session);
+
+//            for (Item item : items) {
+//                Set<ItemHasAddition> itemHasAdditions = item.getItemHasAdditions();
+//                for (ItemHasAddition itemHasAddition : itemHasAdditions) {
+//                    itemHasAddition.getAddition().setItemHasAdditions(null);
+//                }
+//            }
+
             //  ObjectMappingToJson mappingClass = new ObjectMappingToJson();
-            String[] FieldToBeMapped = {"itemId", "itemName", "sortOrder", "price"};
+            String[] FieldToBeMapped = {"itemId", "itemName", "sortOrder", "itemPrice", "itemHasAdditions", "addition", "addId", "addName", "unitId"};
 
             if (items != null) {
                 //        jsonString = mappingClass.getJsonObjectFromObject(items, FieldToBeMapped);
@@ -62,8 +72,8 @@ public class ItemFacadeREST {
             } else {
                 jsonString = "{\"result\":\" user was Not Saved \"}";
             }
-            shandler.closeSessionAndCommite(session);
 
+            shandler.closeSessionAndCommite(session);
         } catch (Exception ex) {
 
             jsonString = "{\"result\":\" user was Not Saved \"}";

@@ -19,9 +19,9 @@ import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
  *
  * @author < abdelrhman el_hadidy >
  */
-public class ObjectMappingToJson {
+public class MappingObjectToJson {
 
-    static Logger log = Logger.getLogger(ObjectMappingToJson.class.getName());
+    static Logger log = Logger.getLogger(MappingObjectToJson.class.getName());
 
     /**
      *
@@ -31,7 +31,7 @@ public class ObjectMappingToJson {
      * @return json string with that object content
      * @throws IOException
      */
-    public String getJsonObjectFromObject(Object object, String[] Fieldnames) throws IOException {
+    public static String getJsonObjectFromObject(Object object, String[] Fieldnames) throws IOException {
         log.info("------------------------------------------------------------");
         log.info("start using  getJsonObjectFromObject method  ");
         String jsonString = null;
@@ -51,7 +51,7 @@ public class ObjectMappingToJson {
      * @return json string with that list content
      * @throws IOException
      */
-    public String getJsonObjectFromObjectList(List<Object> list, String[] Fieldnames) throws IOException {
+    public static String getJsonObjectFromObjectList(List<Object> list, String[] Fieldnames) throws IOException {
         log.info("------------------------------------------------------------");
         log.info("start using  getJsonObjectFromObjectList method  ");
         String jsonString = null;

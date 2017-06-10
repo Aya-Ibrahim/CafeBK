@@ -36,15 +36,18 @@ public class TablesDao {
 
     public List<CafeTable> getTablesWithCriteria(Session session, boolean empty) {
         List<CafeTable> tables = new ArrayList<>();
-        Query createQuery = session.createQuery("from CafeTable c where c.empty = " + empty);
+//         hadidy changes to named parameter to avoid sql injection
+//        Query createQuery = session.createQuery("from CafeTable c where c.empty = " + empty);
+        Query createQuery = session.createQuery("from CafeTable c where c.empty =:TableStatus ");
+        createQuery.setParameter("TableStatus", empty);
         tables = createQuery.list();
         return tables;
     }
 
-    public Order getLatestOrder(Session session,int tableId) {
+    public Order getLatestOrder(Session session, int tableId) {
         List<Order> orders = new ArrayList<>();
         Query createQuery = session.createQuery(
-                "from Order o where o.cafeTable.tableId="+tableId+" order by o.orderDate desc ");
+                "from Order o where o.cafeTable.tableId=" + tableId + " order by o.orderDate desc ");
         orders = createQuery.list();
 
         return (orders != null) ? orders.get(0) : null;

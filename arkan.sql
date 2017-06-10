@@ -27,13 +27,10 @@ DROP TABLE IF EXISTS `addition`;
 CREATE TABLE `addition` (
   `add_id` int(11) NOT NULL AUTO_INCREMENT,
   `add_name` varchar(50) NOT NULL,
-  `item_id` int(11) NOT NULL,
-  `unit_id` int(11) NOT NULL,
-  `price` decimal(10,0) NOT NULL,
-  PRIMARY KEY (`add_id`),
-  KEY `item_id` (`item_id`,`unit_id`),
-  CONSTRAINT `addition_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `unit_id` int(11) DEFAULT NULL,
+  `price` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`add_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +39,7 @@ CREATE TABLE `addition` (
 
 LOCK TABLES `addition` WRITE;
 /*!40000 ALTER TABLE `addition` DISABLE KEYS */;
+INSERT INTO `addition` VALUES (1,'سكر',NULL,NULL),(2,'ملح',NULL,NULL);
 /*!40000 ALTER TABLE `addition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,8 +54,11 @@ CREATE TABLE `cafe_table` (
   `table_id` int(11) NOT NULL AUTO_INCREMENT,
   `table_name` varchar(25) NOT NULL,
   `empty` tinyint(1) NOT NULL,
-  PRIMARY KEY (`table_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `lastOrder` int(11) DEFAULT NULL,
+  PRIMARY KEY (`table_id`),
+  KEY `lastOrder_idx` (`lastOrder`),
+  CONSTRAINT `lastOrder` FOREIGN KEY (`lastOrder`) REFERENCES `order` (`order_id`) ON DELETE SET NULL ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +67,7 @@ CREATE TABLE `cafe_table` (
 
 LOCK TABLES `cafe_table` WRITE;
 /*!40000 ALTER TABLE `cafe_table` DISABLE KEYS */;
+INSERT INTO `cafe_table` VALUES (3,'one',1,NULL),(4,'two',0,2);
 /*!40000 ALTER TABLE `cafe_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,17 +111,17 @@ DROP TABLE IF EXISTS `game_line`;
 CREATE TABLE `game_line` (
   `gameLine_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `service_id` int(11) NOT NULL,
+  `game_Id` int(11) NOT NULL,
   `price` decimal(10,3) NOT NULL,
   `startDate` datetime DEFAULT NULL,
   `endDate` datetime DEFAULT NULL,
   `period` decimal(10,3) DEFAULT NULL,
   PRIMARY KEY (`gameLine_id`),
-  KEY `order_id` (`order_id`,`service_id`),
-  KEY `service_id` (`service_id`),
-  CONSTRAINT `game_line_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `game_line_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `game` (`game_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `order_id` (`order_id`,`game_Id`),
+  KEY `service_id` (`game_Id`),
+  CONSTRAINT `gameLine_game_fk` FOREIGN KEY (`game_Id`) REFERENCES `game` (`game_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `game_line_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,6 +130,7 @@ CREATE TABLE `game_line` (
 
 LOCK TABLES `game_line` WRITE;
 /*!40000 ALTER TABLE `game_line` DISABLE KEYS */;
+INSERT INTO `game_line` VALUES (2,2,1,20.000,NULL,NULL,2.000),(3,2,2,10.000,NULL,NULL,1.000);
 /*!40000 ALTER TABLE `game_line` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,8 +189,39 @@ CREATE TABLE `item` (
 
 LOCK TABLES `item` WRITE;
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
-INSERT INTO `item` VALUES (1,'شاى ',1,1,1,1.500),(2,'شاى فتله ',1,1,2,2.000),(3,'قهوه ',1,1,3,3.000),(4,'شيشه تفاح',2,1,1,10.000);
+INSERT INTO `item` VALUES (1,'شاى ',1,1,1,1.500),(2,'شاى فتله ',1,0,2,2.000),(3,'قهوه ',1,0,3,3.000),(4,'شيشه تفاح',2,1,1,10.000);
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_has_addition`
+--
+
+DROP TABLE IF EXISTS `item_has_addition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_has_addition` (
+  `item_addition_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_item_id` int(11) NOT NULL,
+  `addition_add_id` int(11) NOT NULL,
+  `price` decimal(10,0) DEFAULT NULL,
+  `unit_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`item_addition_Id`),
+  KEY `fk_item_has_addition_addition1_idx` (`addition_add_id`),
+  KEY `fk_item_has_addition_item1_idx` (`item_item_id`),
+  CONSTRAINT `fk_item_has_addition_addition1` FOREIGN KEY (`addition_add_id`) REFERENCES `addition` (`add_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_item_has_addition_item1` FOREIGN KEY (`item_item_id`) REFERENCES `item` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_has_addition`
+--
+
+LOCK TABLES `item_has_addition` WRITE;
+/*!40000 ALTER TABLE `item_has_addition` DISABLE KEYS */;
+INSERT INTO `item_has_addition` VALUES (1,1,1,NULL,NULL),(2,2,1,NULL,NULL),(3,3,1,NULL,NULL);
+/*!40000 ALTER TABLE `item_has_addition` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -235,14 +269,15 @@ CREATE TABLE `order` (
   `order_Date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `table_id` int(11) NOT NULL,
   `is_closed` tinyint(1) NOT NULL,
-  `closedDate` datetime NOT NULL,
-  `cashier_id` int(11) NOT NULL,
+  `closedDate` datetime DEFAULT NULL,
+  `cashier_id` int(11) DEFAULT NULL,
+  `status` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`order_id`),
   KEY `table_id` (`table_id`,`cashier_id`),
   KEY `cashier_id` (`cashier_id`),
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`table_id`) REFERENCES `cafe_table` (`table_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `order_ibfk_2` FOREIGN KEY (`cashier_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,6 +286,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (2,'4242','2017-06-03 13:09:01',4,0,NULL,NULL,'NEW');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +310,7 @@ CREATE TABLE `orderline` (
   KEY `order_id` (`order_id`),
   CONSTRAINT `orderline_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `orderline_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,6 +319,7 @@ CREATE TABLE `orderline` (
 
 LOCK TABLES `orderline` WRITE;
 /*!40000 ALTER TABLE `orderline` DISABLE KEYS */;
+INSERT INTO `orderline` VALUES (6,1,2,'2017-06-03 13:11:44','NEW',5,1),(7,3,2,'2017-06-03 13:11:44','NEW',10,1),(8,4,2,'2017-06-03 20:00:09','NEW',10,1);
 /*!40000 ALTER TABLE `orderline` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,9 +338,9 @@ CREATE TABLE `orderline_addition` (
   PRIMARY KEY (`order_addition_id`),
   KEY `addition_id` (`addition_id`,`orderLine_id`),
   KEY `orderLine_id` (`orderLine_id`),
-  CONSTRAINT `orderline_addition_ibfk_1` FOREIGN KEY (`addition_id`) REFERENCES `addition` (`add_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `orderline_addition_ibfk_1` FOREIGN KEY (`addition_id`) REFERENCES `item_has_addition` (`item_addition_Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `orderline_addition_ibfk_2` FOREIGN KEY (`orderLine_id`) REFERENCES `orderline` (`orderline_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,6 +349,7 @@ CREATE TABLE `orderline_addition` (
 
 LOCK TABLES `orderline_addition` WRITE;
 /*!40000 ALTER TABLE `orderline_addition` DISABLE KEYS */;
+INSERT INTO `orderline_addition` VALUES (1,1,6,4),(2,3,7,2);
 /*!40000 ALTER TABLE `orderline_addition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -483,4 +521,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-20 14:03:32
+-- Dump completed on 2017-06-10 13:10:34

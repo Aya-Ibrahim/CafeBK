@@ -40,29 +40,30 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-configuration>
-  <session-factory>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/arkancafe?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">root</property>
-    <property name="hibernate.format_sql">true</property>
-    <property name="hibernate.show_sql">true</property>
-    <mapping class="beans.Addition"/>
-    <mapping class="beans.TxAdjustment"/>
-    <mapping class="beans.GameLine"/>
-    <mapping class="beans.Order"/>
-    <mapping class="beans.OrderlineAddition"/>
-    <mapping class="beans.Ingredient"/>
-    <mapping class="beans.CafeTable"/>
-    <mapping class="beans.Tab"/>
-    <mapping class="beans.Unit"/>
-    <mapping class="beans.Game"/>
-    <mapping class="beans.ItemIngredient"/>
-    <mapping class="beans.Orderline"/>
-    <mapping class="beans.User"/>
-    <mapping class="beans.Transaction"/>
-    <mapping class="beans.Item"/>
-    <mapping class="beans.Service"/>
-  </session-factory>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/arkancafe?zeroDateTimeBehavior=convertToNull</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">admin</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.show_sql">true</property>
+        <mapping class="beans.Addition"/>
+        <mapping class="beans.TxAdjustment"/>
+        <mapping class="beans.GameLine"/>
+        <mapping class="beans.Order"/>
+        <mapping class="beans.OrderlineAddition"/>
+        <mapping class="beans.Ingredient"/>
+        <mapping class="beans.CafeTable"/>
+        <mapping class="beans.Tab"/>
+        <mapping class="beans.Unit"/>
+        <mapping class="beans.Game"/>
+        <mapping class="beans.ItemIngredient"/>
+        <mapping class="beans.Orderline"/>
+        <mapping class="beans.User"/>
+        <mapping class="beans.Transaction"/>
+        <mapping class="beans.Item"/>
+        <mapping class="beans.ItemHasAddition"/>
+        <mapping class="beans.Service"/>
+    </session-factory>
 </hibernate-configuration>
